@@ -1,5 +1,6 @@
 package modelo.configEmpresa;
 
+import enums.TipoOperario;
 import modelo.persist.OperarioDTO;
 
 public class Operario {
@@ -136,6 +137,8 @@ public class Operario {
      * @return OperarioDTO correspondiente
      */
     protected OperarioDTO getOperarioDTO(){
-    	return null;
+    	return new OperarioDTO(TipoOperario.COMUN, this);
     }
+    
+    
 }

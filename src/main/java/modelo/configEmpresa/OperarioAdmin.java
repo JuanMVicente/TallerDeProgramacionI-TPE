@@ -1,5 +1,6 @@
 package modelo.configEmpresa;
 
+import enums.TipoOperario;
 import exceptions.ContraseñaIncorrectaException;
 import modelo.persist.OperarioDTO;
 
@@ -78,6 +79,6 @@ public class OperarioAdmin extends Operario{
      */
     @Override
     protected OperarioDTO getOperarioDTO(){
-    	return null;
+    	return new OperarioDTO(TipoOperario.ADMIN, this);
     }
 }
