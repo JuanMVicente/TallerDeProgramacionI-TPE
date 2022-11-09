@@ -1,10 +1,10 @@
 package modelo.configEmpresa;
 
+import java.util.ArrayList;
+
+import exceptions.DatosLoginIncorrectosException;
 import exceptions.IdIncorrectoException;
 import exceptions.UsuarioNoAutorizadoException;
-import exceptions.DatosLoginIncorrectosException;
-
-import java.util.ArrayList;
 
 public class ConfiguracionEmpresa {
     private static ConfiguracionEmpresa instance = null;
@@ -16,9 +16,17 @@ public class ConfiguracionEmpresa {
     private Sueldo sueldo;
     private PersistenciaConfiguracion persistencia;
 
-    private ConfiguracionEmpresa(){}
+    private ConfiguracionEmpresa(){
+    	ConfiguracionEmpresa.getInstance();
+    }
 
-    public static ConfiguracionEmpresa getInstance(){return null;}
+    public static ConfiguracionEmpresa getInstance(){
+    	if(instance == null)
+    		return instance = new ConfiguracionEmpresa();
+    	else
+    		return instance;
+    		
+    }
 
     /**
      * Se encarga de cambiar el nombre del local, para esto el usuario debe ser admin,
@@ -31,7 +39,15 @@ public class ConfiguracionEmpresa {
      * post: nombreLocal = name || new UsuarioNoAutorizadoException
      *
      */
-    public void cambiaNombreLocal(String name, Operario user) throws UsuarioNoAutorizadoException {} ;
+    public void cambiaNombreLocal(String name, Operario user) throws UsuarioNoAutorizadoException {
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+    		this.nombreLocal = name;
+    	}
+    	else {
+    		throw new UsuarioNoAutorizadoException();
+    	}
+    }
+    
 
     /**
      * Se encarga de agregar un nuevo mozo a los registros de la empresa, si el usuario no es admin
@@ -43,7 +59,16 @@ public class ConfiguracionEmpresa {
      *      user != null
      * post: se añadira un nuevo mozo a la coleccion
      */
-    public void AgregaMozo(Mozo nuevoMozo, Operario user) throws UsuarioNoAutorizadoException {};
+    public void AgregaMozo(Mozo nuevoMozo, Operario user) throws UsuarioNoAutorizadoException {
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+    		this.mozos.add(nuevoMozo);
+    	}
+    	else {
+    		throw new UsuarioNoAutorizadoException();
+    	}
+    	
+    }
+    
 
     /**
      * Se encarga de actualizar un mozo, si el usuario no es admin se emite una excepcion
@@ -56,7 +81,15 @@ public class ConfiguracionEmpresa {
      *      user != null
      * post: el mozo del sistema tomara los valores de mozoActulizado,
      */
-    public void actualizarMozo(Mozo mozoActualizado, int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {};
+    public void actualizarMozo(Mozo mozoActualizado, int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+    		
+    	}
+    	else {
+    		throw new UsuarioNoAutorizadoException();
+    	}    	
+    }
+    
 
     /**
      * Se encarga de eliminar un mozo segun su Id
