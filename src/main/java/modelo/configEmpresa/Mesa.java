@@ -1,15 +1,16 @@
 package modelo.configEmpresa;
 
+import java.io.Serializable;
+
+import enums.EstadoMesa;
 import exceptions.MesaYaLiberadaException;
 import exceptions.MesaYaOcupadaException;
-
-import java.io.Serializable;
 
 public class Mesa implements Serializable {
     public static enum Estados {LIBRE, OCUPADA}
     private int nroMesa;
     private int cantSillas;
-    private Estados estado;
+    private EstadoMesa estado = EstadoMesa.LIBRE;
 
     /**
      * Crea una nueva mesa en estado LIBRE
@@ -41,7 +42,7 @@ public class Mesa implements Serializable {
      *
      * @return estado de la mesa
      */
-    public Estados getEstado() {
+    public EstadoMesa getEstado() {
         return estado;
     }
 

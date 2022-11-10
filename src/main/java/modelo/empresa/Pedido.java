@@ -14,7 +14,7 @@ public class Pedido {
 		super();
 		this.producto = producto;
 		this.cantidad = cantidad;
-		//fecha actual
+		this.fecha= new Date();
 	}
 
 
