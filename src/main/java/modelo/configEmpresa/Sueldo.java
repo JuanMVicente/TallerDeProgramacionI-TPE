@@ -13,19 +13,13 @@ public class Sueldo implements Serializable {
      * @param basico : sueldo basico
      * @param bonificacionPorHijo : bonificacion por hijo
      */
-    public Sueldo(double basico, double bonificacionPorHijo){
-    	this.basico = basico;
-    	this.bonificacionPorHijo = bonificacionPorHijo;
-    }
+    public Sueldo(double basico, double bonificacionPorHijo){}
 
     /**
      *Se crea un elemento sueldo con el basico definiendo que no existe bonificacion por hijo, por ende bonificacionPorHijo = 0
      * @param basico : Sueldo basico
      */
-    public Sueldo(double basico){
-    	this.basico = basico;
-    	this.bonificacionPorHijo = 0;
-    }
+    public Sueldo(double basico){}
 
     /**
      * Retorna el sueldo basico
@@ -48,16 +42,12 @@ public class Sueldo implements Serializable {
      * pre: basico > 0
      * @param basico : sueldo basico
      */
-    protected void setBasico(double basico){
-    	this.basico = basico;
-    }
+    protected void setBasico(double basico){}
 
     /**
      * Determina la bonificacion por hijo en %
      * pre: bonificiacionProHijo > 0
      * @param bonificacionPorHijo : bonificacion por hijo en %
      */
-    protected void setBonificacionPorHijo(double bonificacionPorHijo){
-    	this.bonificacionPorHijo = bonificacionPorHijo;
-    }
+    protected void setBonificacionPorHijo(double bonificacionPorHijo){}
 }

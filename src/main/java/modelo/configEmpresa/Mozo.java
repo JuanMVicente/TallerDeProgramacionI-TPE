@@ -1,19 +1,18 @@
 package modelo.configEmpresa;
 
+import exceptions.EstadoDelMozoIncorrectoException;
+
 import java.io.Serializable;
 import java.util.Date;
 
-import enums.EstadoMozo;
-import exceptions.EstadoDelMozoIncorrectoException;
-
 public class Mozo implements Serializable {
-   
+    public static enum Estados {ACTIVO, FRANCO, AUSENTE}
     private static int nroMozos = 0;
     private int id;
     private String nombreApellido;
     private Date fechaNacimiento;
     private int cantHijos;
-    private EstadoMozo estado;
+    private Estados estado;
 
     /**
      * Se encarga de crear un nuevo mozo en estado activo,
@@ -25,31 +24,19 @@ public class Mozo implements Serializable {
      *      cantHijos >= 0
      * post: se creo un nuevo usuario
      */
-    public Mozo(String nombreApellido, Date fechaNacimiento, int cantHijos){
-    	this.nombreApellido = nombreApellido;
-    	this.fechaNacimiento = fechaNacimiento;
-    	this.cantHijos = cantHijos;
-    	this.estado = EstadoMozo.ACTIVO;
-    	this.id = Mozo.nroMozos;
-    	this.setNroMozos(Mozo.nroMozos+1);
-    }
+    public Mozo(String nombreApellido, Date fechaNacimiento, int cantHijos){}
 
     /**
      * Permite establecer el nro de mozos
      * @param nroMozos : Nro de mozos
      */
-    public static void setNroMozos(int nroMozos){
-    	Mozo.nroMozos = nroMozos;
-    }
+    public static void setNroMozos(int nroMozos){}
 
-    
     /**
      * Retorna el numero de mozos
      * @return : Nro de mozos
      */
-    public static int getNroMozos(){
-    	return Mozo.nroMozos;
-    }
+    public static int getNroMozos(){return 0;}
 
     /**
      * Retorna en numero de Id del mozo
@@ -83,52 +70,41 @@ public class Mozo implements Serializable {
         return cantHijos;
     }
 
-    public EstadoMozo getEstado(){
-    	return this.estado;
-    }
+    public String getEstado(){return null;}
 
     /**
      * Determina el Id del mozo
      * @param id : nuevo id del mozo
      */
-    protected void setId(int id){
-    	this.id = id;
-    }
+    protected void setId(int id){}
 
     /**
      * determina un nuevo nombre y apellido del mozo
      * @param nombreApellido : nuevo Nombre y apellido del mozo
      */
-    protected void setNombreApellido(String nombreApellido){
-    	this.nombreApellido = nombreApellido;
-    }
+    protected void setNombreApellido(String nombreApellido){}
 
     /**
      * Determina una fecha de nacimiento para el mozo
      * @param fechaNacimiento : Nueva fecha de nacimiento del mozo
      * pre: fechaNacimiento != null && el mozo debe ser mayor de 18
      */
-    protected void setFechaNacimiento(Date fechaNacimiento){
-    	this.fechaNacimiento = fechaNacimiento;
-    }
+    protected void setFechaNacimiento(Date fechaNacimiento){}
 
     /**
      * Determina la cantidad de hijos del mozo
      * @param cantHijos : nueva cantidad de hijos del mozo
      * pre: cantHijos > 0
      */
-    protected void setCantHijos(int cantHijos){
-    	this.cantHijos = cantHijos;
-    }
+    protected void setCantHijos(int cantHijos){}
 
     /**
      * Setea el estado correspondiente del mozo
      * @param estado : Nuevo estado del mozo
+     * @throws EstadoDelMozoIncorrectoException : Si el estado no pertence a los estados del mozo;
      *
      */
-    protected void setEstado(EstadoMozo estado) {
-    	this.estado = estado;
-    }
+    protected void setEstado(String estado) throws EstadoDelMozoIncorrectoException {};
 
 
 }

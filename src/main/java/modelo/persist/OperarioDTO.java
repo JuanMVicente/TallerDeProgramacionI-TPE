@@ -1,9 +1,8 @@
 package modelo.persist;
 
-import java.io.Serializable;
-
-import enums.TipoOperario;
 import modelo.configEmpresa.Operario;
+
+import java.io.Serializable;
 
 public class OperarioDTO implements Serializable {
     private static enum Tipos {ADMIN, COMUN}
@@ -12,21 +11,14 @@ public class OperarioDTO implements Serializable {
     private String nombreUsuario;
     private String password;
     private Boolean activo;
-    private TipoOperario tipo;
+    private Tipos tipo;
 
     /**
      * Se engarga de crear un nuevo operarioDTO apartir de un tipo de operario y un operario
      * @param tipo
      * @param operario
      */
-    public OperarioDTO(TipoOperario tipo, Operario operario){
-    	this.id = operario.getId();
-    	this.nombreApellido = operario.getNombreApellido();
-    	this.nombreUsuario = operario.getNombreUsuario();
-    	this.password = operario.getPassword();
-    	this.activo = operario.getActivo();
-    	this.tipo = tipo;
-    }
+    public OperarioDTO(Tipos tipo, Operario operario){}
 
     /**
      * Retorna el id del operarioDTO
@@ -112,7 +104,7 @@ public class OperarioDTO implements Serializable {
      * Retorna el id del operarioDTO
      * @return id del operarioDTO
      */
-    public TipoOperario getTipo() {
+    public Tipos getTipo() {
         return tipo;
     }
 
@@ -120,7 +112,7 @@ public class OperarioDTO implements Serializable {
      * Determina el tipo del operarioDTO
      * @param tipo : tipo del operario
      */
-    public void setTipo(TipoOperario tipo) {
+    public void setTipo(Tipos tipo) {
         this.tipo = tipo;
     }
 
