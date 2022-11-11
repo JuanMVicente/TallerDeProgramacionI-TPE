@@ -4,6 +4,7 @@ package modelo.empresa;
 import java.util.Collection;
 import java.util.Date;
 
+import enums.EstadoMesa;
 import exceptions.IdIncorrectoException;
 import exceptions.MesaYaLiberadaException;
 import exceptions.MesaYaOcupadaException;
@@ -23,7 +24,14 @@ public class Empresa {
     
     
     
-    /**
+    public Empresa(ConfiguracionEmpresa configuracion, Operario usuario) {
+		super();
+		this.configuracion = configuracion;
+		this.usuario = usuario;
+		
+	}
+
+	/**
      * Se encarga de asignarle un Mozo a una mesa un determinado dia, y guarda esta asignacion en la coleccion asignacionMozosMesas
      * @param mozo : el mozo al que se le asignara la mesa
      * @param mesa : la mesa que se le asignara al mozo
@@ -32,6 +40,8 @@ public class Empresa {
      * post: se añadira una nueva asignacion a la coleccion 
      */
     public void AsignarMozo(Mozo mozo,Mesa mesa,Date dia) {
+    	MozoMesa aux= new MozoMesa(dia,mozo,mesa);
+    	this.asignacionMozosMesas.add(aux);
     	
     }
     
@@ -44,7 +54,15 @@ public class Empresa {
      * post : la mesa pasa a estado ocupado
      */
     
-    public void NuevaComanda(Mesa mesa) throws MesaYaOcupadaException{
+    public void NuevaComanda(Mesa mesa) throws MesaYaOcupadaException{ //falta cumplir contrato
+    	if(mesa.getEstado()==EstadoMesa.LIBRE) {
+    		Comanda aux= new Comanda(mesa);
+    		mesa.ocuparMesa();
+    		this.comandas.add(aux);
+    		
+    	}
+    	else
+    		throw new MesaYaOcupadaException();
     	
     }
     
@@ -62,6 +80,10 @@ public class Empresa {
      */
     
     public void NuevaPromocion(String dias,boolean dosporuno, boolean dtoporcant,int cantmin,double preciounitario){
+    	int id=this.promociones.size()+1;
+    	Promocion aux = new PromocionProducto(id,dias,dosporuno,dtoporcant,cantmin,preciounitario);
+    	this.promociones.add(aux);
+    	
     	
     }
     
@@ -79,6 +101,9 @@ public class Empresa {
      */
     
     public void NuevaPromocionTemp(String dias,String nombre,String formapago,int porcentajedto,boolean acumulable){
+    	int id=this.promociones.size()+1;
+    	Promocion aux = new PromocionTemp(id,dias,formapago,porcentajedto,acumulable,nombre);
+    	this.promociones.add(aux);
     	
     }
     
@@ -92,7 +117,15 @@ public class Empresa {
      * post : facturacion de la comanda , verifica si cumple con alguna promocion activa
      */
     
-    public void CerrarComanda(Comanda comanda) throws MesaYaLiberadaException{
+    public void CerrarComanda(Comanda comanda){
+    	comanda.CerrarComanda();
+    	try {
+			comanda.getMesa().liberarMesa();
+		} catch (MesaYaLiberadaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	//solicitar facturacion
     	
     }
     
@@ -105,6 +138,12 @@ public class Empresa {
      */
     
     public void Desactivarpromocion(int idpromo) throws IdIncorrectoException {
+    	if(idpromo>0 && idpromo<=this.promociones.size()) {
+        	Promocion aux=(Promocion) this.promociones.toArray()[idpromo];
+        	aux.DesactivarPromocion();
+        	}
+        	else
+        		throw new IdIncorrectoException();
     	
     }
     
@@ -117,7 +156,14 @@ public class Empresa {
      */
     
     public void ActivarPromocion(int idpromo) throws IdIncorrectoException {
-   	 
+    	if(idpromo>0 && idpromo<=this.promociones.size()) {
+    	Promocion aux=(Promocion) this.promociones.toArray()[idpromo];
+    	aux.ActivarPromocion();
+    	}
+    	else
+    		throw new IdIncorrectoException();
     }
 
 }
+
+

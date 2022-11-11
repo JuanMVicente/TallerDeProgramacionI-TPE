@@ -15,10 +15,11 @@ public abstract class Promocion {
 	this.activa = true;
 }
 public void DesactivarPromocion() {
+	this.activa=false;
 	 
  }
 public void ActivarPromocion() {
-	 
+	 this.activa=true;
  }
 
 

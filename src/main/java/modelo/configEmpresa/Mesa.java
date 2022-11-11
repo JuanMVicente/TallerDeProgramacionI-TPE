@@ -48,7 +48,9 @@ public class Mesa implements Serializable {
      * @return estado de la mesa
      */
     public EstadoMesa getEstado() {
-        return this.estado;
+
+        return estado;
+
     }
 
     /**

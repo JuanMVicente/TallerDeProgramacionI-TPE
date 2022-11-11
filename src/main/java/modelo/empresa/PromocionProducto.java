@@ -1,5 +1,6 @@
 package modelo.empresa;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import modelo.configEmpresa.Producto;
@@ -14,9 +15,15 @@ public class PromocionProducto extends Promocion {
 	private int cantminima;
 	private double preciounitario;
 	
-	public PromocionProducto(int idprom, String dias) {
-		super(idprom, dias);
-		// TODO Auto-generated constructor stub
+	public PromocionProducto(int idprom,String dias,boolean dosporuno,boolean dtoporcant,int cantminima,double preciounitario) {
+		super(idprom,dias);
+		this.dosporuno=dosporuno;
+		this.dtoporcant=dtoporcant;
+		this.cantminima=cantminima;
+		this.preciounitario=preciounitario;
+		this.productos= new ArrayList<Producto>();
+		
+		
 	
 	}
 	/**
@@ -26,7 +33,8 @@ public class PromocionProducto extends Promocion {
      * post : se agrega un nuevo producto a la coleccion
      */
 	
-	public void AgregaPorducto(Producto producto) {
+	public void AgregaPorducto(Producto producto) { //ver contrato
+		this.productos.add(producto);
 		
 	}
 
