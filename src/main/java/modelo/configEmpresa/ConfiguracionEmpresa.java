@@ -2,9 +2,11 @@ package modelo.configEmpresa;
 
 import java.util.ArrayList;
 
+import enums.EstadoMozo;
 import exceptions.DatosLoginIncorrectosException;
 import exceptions.IdIncorrectoException;
 import exceptions.UsuarioNoAutorizadoException;
+import modelo.empresa.Promocion;
 
 public class ConfiguracionEmpresa {
     private static ConfiguracionEmpresa instance = null;
@@ -15,6 +17,9 @@ public class ConfiguracionEmpresa {
     private ArrayList<Operario> operarios;
     private Sueldo sueldo;
     private PersistenciaConfiguracion persistencia;
+    
+    // agregado después del contrato
+    private ArrayList<Promocion> promociones;
 
     private ConfiguracionEmpresa(){
     	ConfiguracionEmpresa.getInstance();
@@ -83,11 +88,19 @@ public class ConfiguracionEmpresa {
      */
     public void actualizarMozo(Mozo mozoActualizado, int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {
     	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
-    		
-    	}
-    	else {
-    		throw new UsuarioNoAutorizadoException();
-    	}    	
+        	if(mozoId < this.mozos.size()) {
+            	this.mozos.get(mozoId).setCantHijos(mozoActualizado.getCantHijos());
+            	this.mozos.get(mozoId).setEstado(mozoActualizado.getEstado());
+            	this.mozos.get(mozoId).setFechaNacimiento(mozoActualizado.getFechaNacimiento());
+            	this.mozos.get(mozoId).setNombreApellido(mozoActualizado.getNombreApellido());
+            }
+        	else {
+        		throw new IdIncorrectoException();
+        	}
+        }
+        else {
+        	throw new UsuarioNoAutorizadoException();
+        }
     }
     
 
@@ -100,7 +113,20 @@ public class ConfiguracionEmpresa {
      * pre: user != null
      * post: Se eliminara el mozo con el id ingresado de la coleccion
      */
-    public void eliminaMozo(int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {};
+    public void eliminaMozo(int mozoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+    		if(mozoId < this.mozos.size()) {
+        		this.mozos.get(mozoId).setEstado(EstadoMozo.INACTIVO);
+        	}
+    		else {
+    			throw new IdIncorrectoException();
+    		}
+    	}
+    	else {
+    		throw new UsuarioNoAutorizadoException();
+    	}
+    }
+    
 
     /**
      * Se agrega una mesa al registro de la empresa, si el usuario no es admin se emite una exception
@@ -111,7 +137,14 @@ public class ConfiguracionEmpresa {
      *      user != null
      * post: Se agrega la meza a la coleccion de mesas
      */
-    public void agregarMesa(Mesa nuevaMesa, Operario user) throws  UsuarioNoAutorizadoException {};
+    public void agregarMesa(Mesa nuevaMesa, Operario user) throws  UsuarioNoAutorizadoException {
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+    		this.mesas.add(nuevaMesa);
+    	}
+    	else {
+    		throw new UsuarioNoAutorizadoException();
+    	}
+    }
 
     /**
      * Se actualiza la mesa en el sistema
@@ -124,7 +157,19 @@ public class ConfiguracionEmpresa {
      *      user != null
      * post: Se actualiza la mesa en la coleccion.
      */
-    public void actulizarMesa(Mesa mesaActualizada, int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException{};
+    public void actulizarMesa(Mesa mesaActualizada, int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException{
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+        	if(nroMesa < this.mesas.size()) {
+            	this.mesas.get(nroMesa).setCantSillas(mesaActualizada.getCantSillas());
+            }
+        	else {
+        		throw new IdIncorrectoException();
+        	}
+        }
+        else {
+        	throw new UsuarioNoAutorizadoException();
+        }
+    }
 
     /**
      * Se elimina de la colecicon la mesa indicada
@@ -135,7 +180,15 @@ public class ConfiguracionEmpresa {
      * pre: user != null
      * post: Se elimina la mesa de la coleccion
      */
-    public void eliminarMesa(int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {};
+    public void eliminarMesa(int nroMesa, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+    		this.mesas.get(nroMesa).inactivarMesa();
+    	}
+    	else {
+    		throw new UsuarioNoAutorizadoException();
+    	}
+    	
+    };
 
     /**
      * Se agrega un producto al registro de la empresa, si el usuario no es admin se emite una exception
@@ -146,7 +199,15 @@ public class ConfiguracionEmpresa {
      *      user != null
      * post: Se agrega el producto a la coleccion de mesas
      */
-    public void agregarProducto(Producto nuevoProducto, Operario user) throws  UsuarioNoAutorizadoException {};
+    public void agregarProducto(Producto nuevoProducto, Operario user) throws  UsuarioNoAutorizadoException {
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+    		this.productos.add(nuevoProducto);
+    	}
+    	else {
+    		throw new UsuarioNoAutorizadoException();
+    	}
+
+    }
 
     /**
      * Se actualiza un producto en el sistema
@@ -159,7 +220,22 @@ public class ConfiguracionEmpresa {
      *      user != null
      * post: Se actualiza el producto en la coleccion.
      */
-    public void actulizarProducto(Producto productoActualizado, int productoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException{};
+    public void actulizarProducto(Producto productoActualizado, int productoId, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException{
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+        	if(productoId < this.productos.size()) {
+            	this.productos.get(productoId).setNombre(productoActualizado.getNombre());
+            	this.productos.get(productoId).setPrecioCosto(productoActualizado.getPrecioCosto());
+            	this.productos.get(productoId).setPrecioVenta(productoActualizado.getPrecioVenta());
+            	this.productos.get(productoId).setStock(productoActualizado.getStock());
+            }
+        	else {
+        		throw new IdIncorrectoException();
+        	}
+        }
+        else {
+        	throw new UsuarioNoAutorizadoException();
+        }
+    }
 
     /**
      * Se elimina de la colecicon el producto indicada
@@ -170,7 +246,9 @@ public class ConfiguracionEmpresa {
      * pre: user != null
      * post: Se elimina el producto de la coleccion
      */
-    public void eliminarProducto(int idProducto, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {};
+    public void eliminarProducto(int idProducto, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {
+    	//por ahora no lo voy a implementar después vemos si conviene
+    };
 
     /**
      * Se agrega un operario al registro de la empresa, si el usuario no es admin se emite una exception
@@ -181,7 +259,14 @@ public class ConfiguracionEmpresa {
      *      user != null
      * post: Se agrega el operario a la coleccion de mesas
      */
-    public void agregarOperario(Operario nuevoOperario, Operario user) throws  UsuarioNoAutorizadoException {};
+    public void agregarOperario(Operario nuevoOperario, Operario user) throws  UsuarioNoAutorizadoException {
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+    		this.operarios.add(nuevoOperario);
+    	}
+    	else {
+    		throw new UsuarioNoAutorizadoException();
+    	}
+    }
 
     /**
      * Se actualiza un operario en el sistema
@@ -194,7 +279,22 @@ public class ConfiguracionEmpresa {
      *      user != null
      * post: Se actualiza el operario en la coleccion.
      */
-    public void actualizarOperario(Operario operarioActualizado, int idOperario, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException{};
+    public void actualizarOperario(Operario operarioActualizado, int idOperario, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException{
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+        	if(idOperario < this.operarios.size()) {
+            	this.operarios.get(idOperario).setNombreApellido(operarioActualizado.getNombreApellido());
+            	this.operarios.get(idOperario).setActivo(operarioActualizado.getActivo());
+            	this.operarios.get(idOperario).setNombreUsuario(operarioActualizado.getNombreUsuario());
+            	this.operarios.get(idOperario).setPassword(operarioActualizado.getPassword());
+            }
+        	else {
+        		throw new IdIncorrectoException();
+        	}
+        }
+        else {
+        	throw new UsuarioNoAutorizadoException();
+        }
+    }
 
     /**
      * Se elimina de la colecicon el producto indicada
@@ -205,7 +305,9 @@ public class ConfiguracionEmpresa {
      * pre: user != null
      * post: Se elimina el opeario de la coleccion
      */
-    public void eliminarOperario(int idOperario, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {};
+    public void eliminarOperario(int idOperario, Operario user) throws UsuarioNoAutorizadoException, IdIncorrectoException {
+    	//por ahora no lo voy a implementar después vemos si conviene
+    };
 
     /**
      * Se encarga de actualizar el elemento sueldo de la empresa
@@ -214,7 +316,14 @@ public class ConfiguracionEmpresa {
      * pre: sueldo != null
      * post: this.sueldo = nuevoSueldo;
      */
-    public void actualizarSueldo(Sueldo nuevoSueldo) throws UsuarioNoAutorizadoException {};
+    public void actualizarSueldo(Sueldo nuevoSueldo, Operario user) throws UsuarioNoAutorizadoException {
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+    		this.sueldo = nuevoSueldo;
+    	}
+    	else {
+    		throw new UsuarioNoAutorizadoException();
+    	}
+    }
 
     /**
      * Si el nombre de usuario y contraseña son correctas, retorna el operario correspondiente
@@ -226,7 +335,24 @@ public class ConfiguracionEmpresa {
      *      password != null && password != ""
      * post: retorna el operario deseado.
      */
-    public Operario login(String nombreDeUsuario, String password) throws DatosLoginIncorrectosException { return null;};
+    public Operario login(String nombreDeUsuario, String password) throws DatosLoginIncorrectosException {
+
+		int i=0;
+		if(operarios.size()!=0){
+			while(operarios.size()>i && (!operarios.get(i).getNombreUsuario().equalsIgnoreCase(nombreDeUsuario))) 
+				i++;
+				if(i<operarios.size())
+					if((operarios.get(i).getPassword().equalsIgnoreCase(password))) 
+						return operarios.get(i);
+					else
+						throw new DatosLoginIncorrectosException();
+				else
+					throw new DatosLoginIncorrectosException();
+		}
+    	else {
+    		return null;
+    	}
+    }
 
     /**
      * Retorna los operarios del sistema, si el usuario no esta autorizado se emite una excepcion
@@ -236,13 +362,24 @@ public class ConfiguracionEmpresa {
      * pre: user != null
      * post: retorna this.operarios
      */
-    public ArrayList<Operario> getOperarios(Operario user) throws UsuarioNoAutorizadoException { return null;};
+    public ArrayList<Operario> getOperarios(Operario user) throws UsuarioNoAutorizadoException { 
+    	if(user.getClass().toString().equals("class modelo.configEmpresa.OperarioAdmin")) {
+    		return this.operarios;
+    	}
+    	else {
+    		throw new UsuarioNoAutorizadoException();
+    	}
+    }
+    
 
     /**
      * Retorna los mozos del sistema
      * @return Los mozos del sistema
      */
-    public ArrayList<Mozo> getMozos() {return null;};
+    public ArrayList<Mozo> getMozos() {
+    	return this.mozos;
+    }
+    
 
     /**
      * Retorna el mozo correspondiente al id ingresado, en caso de que no exista dicho id arroja una excepcion
@@ -250,13 +387,23 @@ public class ConfiguracionEmpresa {
      * @return el mozo correspondiente al id ingresado
      * @throws IdIncorrectoException Si el Id no corresponde
      */
-    public Mozo getMozoById(int mozoId) throws IdIncorrectoException {return null;};
+    public Mozo getMozoById(int mozoId) throws IdIncorrectoException {
+    if(mozoId<this.mozos.size()) {
+    		return this.mozos.get(mozoId);
+    	}
+    	else {
+    		throw new IdIncorrectoException();
+    	}
+    }
 
     /**
      * Retorna las mesas del sistema
      * @return Las mesas del sistema
      */
-    public ArrayList<Mesa> getMesas() {return null;};
+    public ArrayList<Mesa> getMesas() {
+    	return this.mesas;
+    }
+    
 
     /**
      * Retorna la mesa correspondiente al id ingresado, en caso de que no exista dicho id arroja una excepcion
@@ -264,13 +411,22 @@ public class ConfiguracionEmpresa {
      * @return la mesa correspondiente al id ingresado
      * @throws IdIncorrectoException Si el Id no corresponde
      */
-    public Mesa getMesaNroMesa(int nroMesa) throws IdIncorrectoException {return null;};
+    public Mesa getMesaNroMesa(int nroMesa) throws IdIncorrectoException {
+        if(nroMesa<this.mesas.size()) {
+    		return this.mesas.get(nroMesa);
+    	}
+    	else {
+    		throw new IdIncorrectoException();
+    	}
+    }
 
     /**
      * Retorna los productos del sistema
      * @return Los productos del sistema
      */
-    public ArrayList<Producto> getProductos() {return null;};
+    public ArrayList<Producto> getProductos() {
+    	return this.productos;
+    }
 
     /**
      * Retorna el producto correspondiente al id ingresado, en caso de que no exista dicho id arroja una excepcion
@@ -278,13 +434,22 @@ public class ConfiguracionEmpresa {
      * @return el producto correspondiente al id ingresado
      * @throws IdIncorrectoException Si el Id no corresponde
      */
-    public Producto getProductoById(int productoId) throws IdIncorrectoException {return null;};
+    public Producto getProductoById(int productoId) throws IdIncorrectoException {
+        if(productoId<this.productos.size()) {
+    		return this.productos.get(productoId);
+    	}
+    	else {
+    		throw new IdIncorrectoException();
+    	}
+    }
 
     /**
      * Retorna el elemento sueldo de la empresa
      * @return El elemento sueldo de la empresa
      */
-    public Sueldo getSueldo() { return null;};
+    public Sueldo getSueldo() { 
+    	return this.sueldo;
+    }
 
     /**
      * Determina el elemento sueldo de la empresa
@@ -294,7 +459,9 @@ public class ConfiguracionEmpresa {
      * pre: nuevoSueldo != null;
      * post : this.sueldo == nuevoSueldo;
      */
-    public void setSueldo(Sueldo nuevoSueldo) throws UsuarioNoAutorizadoException {};
+    public void setSueldo(Sueldo nuevoSueldo) throws UsuarioNoAutorizadoException {
+    	this.sueldo = nuevoSueldo;
+    }
 
     /**
      * Se encarga de guardar la configuracion de la empresa
@@ -307,4 +474,30 @@ public class ConfiguracionEmpresa {
      * (faltan agregar las excepciones correspondientes)
      */
     public void recuperarConfiguracion(){}
+
+    
+    //agregado luego de hacer los javadoc
+	public ArrayList<Operario> getOperarios() {
+		return operarios;
+	}
+
+	public void setOperarios(ArrayList<Operario> operarios) {
+		this.operarios = operarios;
+	}
+
+	public ArrayList<Promocion> getPromociones() {
+		return promociones;
+	}
+
+	public void setPromociones(ArrayList<Promocion> promociones) {
+		this.promociones = promociones;
+	}
+
+	public String getNombreLocal() {
+		return nombreLocal;
+	}
+	
+	public void agregaPromociones(Promocion promocion) {
+		this.promociones.add(promocion);
+	}
 }

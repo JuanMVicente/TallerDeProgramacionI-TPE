@@ -9,7 +9,7 @@ public class Operario {
     private String nombreApellido;
     private String nombreUsuario;
     private String password;
-    private Boolean activo;
+    private boolean activo;
 
     
     /**
@@ -30,7 +30,7 @@ public class Operario {
     	this.password = password;
     	this.activo = false;
     	this.id = Operario.nroOperario;
-    	this.setNroOperario(Operario.nroOperario + 1);
+    	Operario.setNroOperario(Operario.nroOperario + 1);
     }
     	
     
@@ -139,6 +139,34 @@ public class Operario {
     protected OperarioDTO getOperarioDTO(){
     	return new OperarioDTO(TipoOperario.COMUN, this);
     }
+    
+    public String getPassword() {
+    	return this.password;
+    }
+    
+    public boolean getActivo() {
+    	return this.activo;
+    }
+
+	public void setNombreApellido(String nombreApellido) {
+		this.nombreApellido = nombreApellido;
+	}
+
+
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+    
     
     
 }

@@ -75,6 +75,11 @@ public class Mesa implements Serializable {
     	else
     		throw new MesaYaLiberadaException();
     }
+    
+    //Agregado después de los javadoc 
+    public void inactivarMesa(){
+    	this.estado = EstadoMesa.INACTIVA;
+    }
 
 }
 
