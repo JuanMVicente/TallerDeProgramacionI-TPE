@@ -1,5 +1,6 @@
 package modelo.archivo;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -34,14 +35,26 @@ public class Factura {
      * pre: pedidos no puede estar vació, mesa debe ser distinto de null, la forma de pago se debe encontrar dentro los tipos enunciados en los enums
      * post: Instancia la factura con los datos relacionados a la misma
      */
-    Factura(Mesa mesa,Collection<Pedido> pedidos, String formaDePago){}
+    public Factura(Mesa mesa,Collection<Pedido> pedidos, String formaDePago){
+    	
+    	Calendar calendar = Calendar.getInstance();
+    	this.fecha =  calendar.getTime();
+    	this.mesa = mesa;
+    	this.pedidos = pedidos;
+    	this.formaDePago = formaDePago;
+    	this.total = this.calculaTotal(pedidos, formaDePago);
+    	this.promocionesAplicadas = this.getPromocionesAplicadas();
+    }
     
     
     /**
      * Consulta al registro factura
      * @return fecha de la factura instanciada
      */
-    public Date getFecha() {return fecha;}
+    public Date getFecha() {
+    	return fecha;
+    }
+    
 
     /**
      * Consulta al registro factura
@@ -83,7 +96,13 @@ public class Factura {
 	 * Consulta al registro factura
 	 * @return promociones aplicadas en la factura instanciada
 	 */
-	public Collection<Promocion> getPromocionesAplicadas() {return promocionesAplicadas;}
+	public Collection<Promocion> getPromocionesAplicadas() {
+		//Ver en clase Empresa
+		
+		
+		
+		return promocionesAplicadas;
+	}
 	
 	
 	/**
@@ -91,7 +110,10 @@ public class Factura {
 	 * @return listado de promociones que se deben aplicar en la factura instanciada
 	 * Esta clase debe tener acceso al listado de promociones para poder realizar el cálculo correspondiente
 	 */
-	public Collection<Promocion> promocionesAplicadas() {Collection<Promocion> listaPromociones = null; return listaPromociones;}
+	public Collection<Promocion> promocionesAplicadas() {
+		Collection<Promocion> listaPromociones = null; 
+		
+		return listaPromociones;}
 	
 	
 	/**
