@@ -1,15 +1,17 @@
 package modelo.configEmpresa;
 
+import java.io.Serializable;
+
+import enums.EstadoMesa;
 import exceptions.MesaYaLiberadaException;
 import exceptions.MesaYaOcupadaException;
 
-import java.io.Serializable;
 
 public class Mesa implements Serializable {
-    public static enum Estados {LIBRE, OCUPADA}
+    
     private int nroMesa;
     private int cantSillas;
-    private Estados estado;
+    private EstadoMesa estado = EstadoMesa.LIBRE;
 
     /**
      * Crea una nueva mesa en estado LIBRE
@@ -20,6 +22,8 @@ public class Mesa implements Serializable {
      *                   nroMesa >= 0
      */
     public Mesa(int nroMesa, int cantSillas) {
+    	this.nroMesa = nroMesa;
+    	this.cantSillas = cantSillas;
     }
 
     /**
@@ -34,28 +38,48 @@ public class Mesa implements Serializable {
      * Determina la cantidad de sillas de la mesa
      * @param cantSillas : Nueva cantidad de sillas
      */
-    protected void setCantSillas(int cantSillas){}
+    protected void setCantSillas(int cantSillas){
+    	this.cantSillas = cantSillas;
+    }
 
     /**
      * Retorna el estado de la mesa
      *
      * @return estado de la mesa
      */
-    public Estados getEstado() {
-        return estado;
+    public EstadoMesa getEstado() {
+        return this.estado;
     }
 
     /**
      * Se encarga de ocupar la mesa
      * @throws MesaYaOcupadaException : Si la mesa ya se encuentra ocupada
      */
-    public void ocuparMesa() throws MesaYaOcupadaException {}
+    public void ocuparMesa() throws MesaYaOcupadaException {
+    	if(this.estado != EstadoMesa.OCUPADA) {
+    		this.estado = EstadoMesa.OCUPADA;
+    	}
+    	else
+    		throw new MesaYaOcupadaException();
+    }
+    
 
     /**
      * Se encarga de liberar la mesa actual
      * @throws MesaYaLiberadaException : Si la mesa ya se encuentra liberada
      */
-    public void liberarMesa() throws MesaYaLiberadaException {}
+    public void liberarMesa() throws MesaYaLiberadaException {
+    	if(this.estado != EstadoMesa.LIBRE) {
+    		this.estado = EstadoMesa.LIBRE;
+    	}
+    	else
+    		throw new MesaYaLiberadaException();
+    }
+    
+    //Agregado después de los javadoc 
+    public void inactivarMesa(){
+    	this.estado = EstadoMesa.INACTIVA;
+    }
 
 }
 

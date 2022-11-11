@@ -1,7 +1,9 @@
 package modelo.archivo;
 
+import java.util.Calendar;
 import java.util.Date;
 
+import enums.EstadoMozo;
 import modelo.configEmpresa.Mozo;
 
 
@@ -13,7 +15,7 @@ import modelo.configEmpresa.Mozo;
 public class Asistencia {
     private Date fecha;
     private Mozo mozo;
-    private String estado;
+    private EstadoMozo estadoMozo;
     
     
     /**
@@ -23,14 +25,21 @@ public class Asistencia {
      * pre: Mozo debe ser distinto de Null y el estado cumplir con los Strings creados como "enums"
      * post: genera el registro de asistencia de un mozo para el día de la fecha
      */
-    public Asistencia(Mozo mozo, String estado){}
-
+    public Asistencia(Mozo mozo, EstadoMozo estado){
+    	this.mozo = mozo;
+    	this.estadoMozo = estado;
+    	Calendar calendar = Calendar.getInstance();
+    	this.fecha =  calendar.getTime();
+    }
+    	
     
     /**
      * Consulta la fecha en la cual se realizó el registro
      * @return fecha de registro
      */
-	public Date getFecha() {return fecha;}
+	public Date getFecha() {
+		return this.fecha;
+	}
 
 	
 	/**
@@ -39,14 +48,18 @@ public class Asistencia {
 	 * pre: fecha debe ser distinto de null y tener un formato de fecha válido
 	 * post: cambia la fecha de la instancia
 	 */
-	public void setFecha(Date fecha) {this.fecha = fecha;}
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 
 
 	/**
 	 * Consulta el mozo para el cual se realizó el registro
 	 * @return mozo que se desea registrar el estado
 	 */
-	public Mozo getMozo() {return mozo;}
+	public Mozo getMozo() {
+		return mozo;
+	}
 
 
 	
@@ -54,7 +67,9 @@ public class Asistencia {
 	 * Consulta el estado del mozo para el cual se generó el registro
 	 * @return estado del mozo (Activo, De Franco o Ausente) //Ver Enums
 	 */
-	public String getEstado() {return estado;}
+	public EstadoMozo getEstado() {
+		return this.estadoMozo;
+	}
  
     
 }

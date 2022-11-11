@@ -1,5 +1,6 @@
 package modelo.configEmpresa;
 
+import enums.TipoOperario;
 import modelo.persist.OperarioDTO;
 
 public class Operario {
@@ -8,8 +9,9 @@ public class Operario {
     private String nombreApellido;
     private String nombreUsuario;
     private String password;
-    private Boolean activo;
+    private boolean activo;
 
+    
     /**
      * Se encarga de crear un opeario nuevo si la contraseña es valida, este operario es activo
      * @param nombreApellido : nombre y apellido
@@ -22,8 +24,19 @@ public class Operario {
      *      password debe contener al menos un numero
      * post: se retorna un operario nuevo activo
      */
-    public Operario(String nombreApellido, String nombreUsuario, String password) {}
-
+    public Operario(String nombreApellido, String nombreUsuario, String password) {
+    	this.nombreApellido = nombreApellido;
+    	this.nombreUsuario = nombreUsuario;
+    	this.password = password;
+    	this.activo = false;
+    	this.id = Operario.nroOperario;
+    	Operario.setNroOperario(Operario.nroOperario + 1);
+    }
+    	
+    
+    public Operario() {}//borrar despues, lo hice para hacer pruebas
+    
+    
     /**
      * Retorna el Id del operario
      * @return id Operario
@@ -60,47 +73,100 @@ public class Operario {
      * Define un numero de operarios
      * @param nroOperario
      */
-    protected static void setNroOperario(int nroOperario){}
+    protected static void setNroOperario(int nroOperario){
+    	Operario.nroOperario = nroOperario;
+    }
+    
 
     /**
      * Retorna el numero de operarios
      * @return Numero de operarios
      */
-    protected static int getNroOperario(){return 0;}
+    protected static int getNroOperario(){
+    	return Operario.nroOperario;
+    }
 
+    
     /**
      * Informa si el operario esta calificado para gestionar mesas
      * @return posibilidad de gestionar mesas
      */
-    public boolean puedeGestionarMesas(){return false;}
+    public boolean puedeGestionarMesas(){
+    	return false;
+    }
 
+    
     /**
      * Informa si el operario esta calificado para gestioanr mozos
      * @return posibilidad de gestionar mozos
      */
-    public boolean puedeGestionarMozos(){return false;}
+    public boolean puedeGestionarMozos(){
+    	return false;
+    }
 
+    
     /**
      * Informa si el operario esta calificado para gestionar productos
      * @return posibilidad de gestinar productos
      */
-    public boolean puedeGestionarProductos(){return false;}
+    public boolean puedeGestionarProductos(){
+    	return false;
+    }
 
+    
     /**
      * Informa si el operario esta calificado para gestionar sueldo
      * @return posibilidad de gestionar sueldo
      */
-    public boolean puedeGestionarSueldo(){return false;}
+    public boolean puedeGestionarSueldo(){
+    	return false;
+    }
 
+    
     /**
      * Informa si el operario esta claificado para gestionar operarios
      * @return posibilidad de gestionar operarios
      */
-    public boolean puedeGestionarOperarios(){return false;}
+    public boolean puedeGestionarOperarios(){
+    	return false;
+    }
 
+    
     /**
      * Retorna un operarioDTO, para su transferencia de informacion
      * @return OperarioDTO correspondiente
      */
-    protected OperarioDTO getOperarioDTO(){return null;}
+    protected OperarioDTO getOperarioDTO(){
+    	return new OperarioDTO(TipoOperario.COMUN, this);
+    }
+    
+    public String getPassword() {
+    	return this.password;
+    }
+    
+    public boolean getActivo() {
+    	return this.activo;
+    }
+
+	public void setNombreApellido(String nombreApellido) {
+		this.nombreApellido = nombreApellido;
+	}
+
+
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+    
+    
+    
 }

@@ -24,7 +24,16 @@ public class Producto implements Serializable {
      * @param stockInicial : stock inicial del producto
      *
      */
-    public Producto(String nombre, double precioCosto, double precioVenta, int stockInicial){}
+    public Producto(String nombre, double precioCosto, double precioVenta, int stockInicial){
+    	this.nombre = nombre;
+    	this.precioCosto = precioCosto;
+    	this.precioVenta = precioVenta;
+    	this.stock = stockInicial;
+    	this.id = Producto.nroProducto;
+    	Producto.nroProducto++;
+    	
+    }
+    
 
     /**
      * Crea un nuevo producto con stock inicial igual a 0
@@ -36,7 +45,15 @@ public class Producto implements Serializable {
      * @param precioCosto : precio de costo del producto
      * @param precioVenta : precio de venta del producto
      */
-    public Producto(String nombre, double precioCosto, double precioVenta){}
+    public Producto(String nombre, double precioCosto, double precioVenta){
+    	this.nombre = nombre;
+    	this.precioCosto = precioCosto;
+    	this.precioVenta = precioVenta;
+    	this.stock = 0;
+    	this.id = Producto.nroProducto;
+    	Producto.nroProducto++;
+    }
+    
 
     /**
      * Retorna el id de un producto
@@ -78,47 +95,69 @@ public class Producto implements Serializable {
         return stock;
     }
 
+    
     /**
      * Determina un nuevo id del producto
      * @param id : Nuevo id del producto
      */
-    protected void setId(int id){}
+    protected void setId(int id){
+    	this.id = id;
+    }
 
+    
     /**
      * Determina el nuevo nombre del producto
      * @param nombre : nuevo nombre del producto
      */
-    protected void setNombre(String nombre){}
+    protected void setNombre(String nombre){
+    	this.nombre = nombre;
+    }
 
+    
     /**
      * Determina el precio de costo del producto
      * pre: precioCosto <= this.precioVenta && precioCosto > 0
      * @param precioCosto : precio de costo del producto
      */
-    protected void setPrecioCosto(double precioCosto){}
+    protected void setPrecioCosto(double precioCosto){
+    	this.precioCosto = precioCosto;
+    }
 
+    
     /**
      * Determina el precio de venta del producto
      * pre: precioVenta >= this.precioCosto && precioVenta > 0
      * @param precioVenta : precio de venta del producto
      */
-    protected void setPrecioVenta(double precioVenta){}
+    protected void setPrecioVenta(double precioVenta){
+    	this.precioVenta = precioVenta;
+    }
 
+    
     /**
      * Determina el stock del producto
      * pre: stock >= 0
      * @param stock : stock del producto
      */
-    protected void setStock(int stock){}
+    protected void setStock(int stock){
+    	this.stock = stock;
+    }
 
+    
     /**
      * Reduce el stock del producto en 1
      * pre:
      * post: this.cantidad = oldCantidad - 1
      * @throws StockInsuficienteException si el stock no es suficiente para realizar la accion indicada
      */
-    public void reducirStock() throws StockInsuficienteException {}
+    public void reducirStock() throws StockInsuficienteException {
+    	if(this.stock > 0)
+    		this.stock--;
+    	else
+    		throw new StockInsuficienteException();
+    }
 
+    
     /**
      * Reduce el stock del producto en la cantidad indicada si la
      * cantidad supera el stock establecido, retorna excepcion
@@ -127,5 +166,15 @@ public class Producto implements Serializable {
      * @param cantidad : cantidad de stock que se desea restar
      * @throws StockInsuficienteException si el stock no es suficiente para realizar la accion indicada
      */
-    public void reducirStock(int cantidad) throws StockInsuficienteException {}
+    public void reducirStock(int cantidad) throws StockInsuficienteException {
+    	if(this.stock - cantidad >= 0)
+    		this.stock -= cantidad;
+    	else
+    		throw new StockInsuficienteException();
+    }	
+    
+    
+    protected static int getNroProducto(){
+    	return Producto.nroProducto;
+    }
 }
