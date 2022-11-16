@@ -15,8 +15,8 @@ y que evalúen la posibilidad de que hagamos un trabajo entre los tres porque si
 y el testeo de todo para una sola persona.
 
 Por favor cualquier novedad nos lo hacen saber, nuestros mails son:
-Gentili, David          davisgentilli@gmail.com
-Gomez, Tomás:           tomygomez347@gmail.com
-Vicente, Juan Martín:   j_m_vicente@yahoo.com.ar
+* Gentili, David          davisgentilli@gmail.com
+* Gomez, Tomás:           tomygomez347@gmail.com
+* Vicente, Juan Martín:   j_m_vicente@yahoo.com.ar
 
 Saludos cordiales
