@@ -11,8 +11,9 @@ materias, por cuestiones laborales y tampoco nos vimos favorecidos en que uno de
 par de semamas.
 
 Agradeceríamos que nos den la oportunidad de continuar con los mismos para entregar en la segunda fecha un trabajo más desarrollado
-y que evalúen la posibilidad de que hagamos un trabajo entre los tres porque sinceramente consideramos que es muy extensa la codificación 
-y el testeo de todo para una sola persona.
+y que evalúen la posibilidad (teniendo en cuenta que uno de los programas se encuentra más avanzado) de que hagamos un trabajo entre
+los tres porque sinceramente consideramos que es muy extenso el trabajo para una sola persona y también es importante el debate para
+realizar un mejor trabajo.
 
 Por favor cualquier novedad nos lo hacen saber, nuestros mails son:
 * Gentili, David          davisgentilli@gmail.com
