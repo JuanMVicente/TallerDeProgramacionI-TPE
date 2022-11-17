@@ -8,7 +8,7 @@ public class PromocionTemp extends Promocion {
 	
 	
 	
-	public PromocionTemp(int idprom, String dias, String formapago, int porcentajedto, boolean acumulable,
+	public PromocionTemp(int idprom, int dias, String formapago, int porcentajedto, boolean acumulable,
 			String nombre) {
 		super(idprom, dias);
 		this.formapago = formapago;

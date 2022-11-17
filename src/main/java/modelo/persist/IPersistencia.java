@@ -5,7 +5,7 @@ import exceptions.ArchivoNoInciliazadoException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public interface IPersistencia<E> {
+public interface IPersistencia {
 
     /**
      * Se encarga de abrir un archivo de entrada
@@ -45,7 +45,7 @@ public interface IPersistencia<E> {
      * @throws IOException : Si surge un error al escribir el archivo
      * @throws ArchivoNoInciliazadoException : si el archivo no se encuentra correctamente inicializado
      */
-    void writeFile(E object) throws IOException, ArchivoNoInciliazadoException;
+    void writeFile(Object object) throws IOException, ArchivoNoInciliazadoException;
 
     /**
      * Se intenta leer un objeto serializable de un archivo previamiente inicializado
@@ -54,6 +54,6 @@ public interface IPersistencia<E> {
      * @throws ClassNotFoundException : Si no se encuentra la clase que se quiere leer
      * @throws ArchivoNoInciliazadoException : si el archivo no se encuentra correctamente inicializado
      */
-    E readFile() throws IOException, ClassNotFoundException, ArchivoNoInciliazadoException;
+    Object readFile() throws IOException, ClassNotFoundException, ArchivoNoInciliazadoException;
 
 }

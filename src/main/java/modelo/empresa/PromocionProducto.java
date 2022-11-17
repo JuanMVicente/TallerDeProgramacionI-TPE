@@ -15,7 +15,7 @@ public class PromocionProducto extends Promocion {
 	private int cantminima;
 	private double preciounitario;
 	
-	public PromocionProducto(int idprom,String dias,boolean dosporuno,boolean dtoporcant,int cantminima,double preciounitario) {
+	public PromocionProducto(int idprom,int dias,boolean dosporuno,boolean dtoporcant,int cantminima,double preciounitario) {
 		super(idprom,dias);
 		this.dosporuno=dosporuno;
 		this.dtoporcant=dtoporcant;
