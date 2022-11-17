@@ -79,7 +79,7 @@ public class Empresa {
      * post: se añadira una nueva promocion a la coleccion 
      */
     
-    public void NuevaPromocion(String dias,boolean dosporuno, boolean dtoporcant,int cantmin,double preciounitario){
+    public void NuevaPromocion(int dias,boolean dosporuno, boolean dtoporcant,int cantmin,double preciounitario){
     	int id=this.promociones.size()+1;
     	Promocion aux = new PromocionProducto(id,dias,dosporuno,dtoporcant,cantmin,preciounitario);
     	this.promociones.add(aux);
@@ -100,7 +100,7 @@ public class Empresa {
      * post: se añadira una nueva promocion a la coleccion 
      */
     
-    public void NuevaPromocionTemp(String dias,String nombre,String formapago,int porcentajedto,boolean acumulable){
+    public void NuevaPromocionTemp(int dias,String nombre,String formapago,int porcentajedto,boolean acumulable){
     	int id=this.promociones.size()+1;
     	Promocion aux = new PromocionTemp(id,dias,formapago,porcentajedto,acumulable,nombre);
     	this.promociones.add(aux);

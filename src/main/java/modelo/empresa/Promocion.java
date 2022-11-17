@@ -3,12 +3,12 @@ package modelo.empresa;
 
 public abstract class Promocion {
  private int idprom;
- private String dias;
+ private int dias; // 1 Lunes - 2 Martes - 3 Miercoles - 4 Jueves - 5 Viernes - 6 Sabado - 7 Domingo
  private boolean activa;
 
  
 
- public Promocion(int idprom, String dias) {
+ public Promocion(int idprom, int dias) {
 	super();
 	this.idprom = idprom;
 	this.dias = dias;
@@ -27,7 +27,7 @@ public void ActivarPromocion() {
 public int getIdprom() {
 	return idprom;
 }
-public String getDias() {
+public int getDias() {
 	return dias;
 }
 public boolean isActiva() {

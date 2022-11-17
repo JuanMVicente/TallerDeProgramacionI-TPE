@@ -1,9 +1,11 @@
 package modelo.archivo;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
+import modelo.configEmpresa.ConfiguracionEmpresa;
 import modelo.configEmpresa.Mesa;
 import modelo.empresa.Pedido;
 import modelo.empresa.Promocion;
@@ -19,10 +21,10 @@ public class Factura {
 
     private Date fecha;
     private Mesa mesa;
-    private Collection<Pedido> pedidos;
+    private ArrayList<Pedido> pedidos;
     private double total;
     private String formaDePago;
-    private Collection<Promocion> promocionesAplicadas;
+    private ArrayList<Promocion> promocionesAplicadas;
 
 
     /**
@@ -35,7 +37,7 @@ public class Factura {
      * pre: pedidos no puede estar vació, mesa debe ser distinto de null, la forma de pago se debe encontrar dentro los tipos enunciados en los enums
      * post: Instancia la factura con los datos relacionados a la misma
      */
-    public Factura(Mesa mesa,Collection<Pedido> pedidos, String formaDePago){
+    public Factura(Mesa mesa, ArrayList<Pedido> pedidos, String formaDePago){
     	
     	Calendar calendar = Calendar.getInstance();
     	this.fecha =  calendar.getTime();
@@ -43,7 +45,7 @@ public class Factura {
     	this.pedidos = pedidos;
     	this.formaDePago = formaDePago;
     	this.total = this.calculaTotal(pedidos, formaDePago);
-    	this.promocionesAplicadas = this.getPromocionesAplicadas();
+    	this.promocionesAplicadas = this.calculaPromocionesAplicadas();
     }
     
     
@@ -110,10 +112,23 @@ public class Factura {
 	 * @return listado de promociones que se deben aplicar en la factura instanciada
 	 * Esta clase debe tener acceso al listado de promociones para poder realizar el cálculo correspondiente
 	 */
-	public Collection<Promocion> promocionesAplicadas() {
-		Collection<Promocion> listaPromociones = null; 
+	private ArrayList<Promocion> calculaPromocionesAplicadas() {
+		ArrayList<Promocion> listaPromociones = new ArrayList<Promocion>(); 
 		
-		return listaPromociones;}
+		for(int i = 0; i<this.pedidos.size(); i++) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(this.pedidos.get(i).getFecha());
+			int day = calendar.get(Calendar.DAY_OF_WEEK);
+			ConfiguracionEmpresa config = ConfiguracionEmpresa.getInstance();
+			for(int j = 0; j < config.getPromociones().size();j++) {
+				if(config.getPromociones().get(j).getDias() == day) {
+					listaPromociones.add(config.getPromociones().get(j));
+				}
+			}
+		}
+		
+		return listaPromociones;
+	}
 	
 	
 	/**
